@@ -3,12 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mongoose = require('mongoose');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
 
 var app = express();
+var mongoose = require('mongoose');
 
 // connect to MongoDB
 mongoose.connect('mongodb://main_author:main0author@ds048279.mlab.com:48279/mirnews', { useNewUrlParser: true }).then(
@@ -29,8 +29,24 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// setup api requests
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
+    next();
+});
+
+// app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+
+// setup api routes
+var v1 = require('./routes/api_v1');
+
+app.use('/v1', v1);
+
+// latest API route
+app.use('/', v1);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
