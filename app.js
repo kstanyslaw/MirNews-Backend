@@ -45,7 +45,7 @@ var v1 = require('./routes/api_v1');
 
 app.use('/v1', v1);
 
-// latest API route
+// setup default (or latest) API route
 app.use('/', v1);
 
 // catch 404 and forward to error handler
