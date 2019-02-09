@@ -8,9 +8,20 @@ router.get('/', function(req, res, next) {
   News.find()
     .exec(function(err, news) {
       if(err) {
-        error(500, "An error occured. Can't get any news from DataBase:(", err, res)
+        return error(500, "An error occured. Can't get any news from DataBase:(", err, res);
       }
       res.status(200).json(news)
+    })
+})
+
+
+// Get one news by id
+router.get('/:id', function(req, res, next) {
+  News.findById(req.params.id)
+    .exec(function(err, news) {
+      if(err) {
+        return error(500, 'An error occured while getting news by id:(', err, res);
+      }
     })
 })
 
@@ -26,7 +37,7 @@ router.post('/', function(req, res, next) {
 
   news.save(function(err, result) {
     if(err) {
-      error(500, "An error occured. Can't save the news to DataBase:(", err, res);
+      return error(500, "An error occured. Can't save the news to DataBase:(", err, res);
     }
     res.status(201).json(result)
   })
