@@ -22,6 +22,10 @@ router.get('/:id', function(req, res, next) {
       if(err) {
         return error(500, 'An error occured while getting news by id:(', err, res);
       }
+      if(!news) {
+        return error(500, 'No news found with such id:(', ('id: ' + req.params.id), res);
+      }
+      return res.status(200).json(news);
     })
 })
 
