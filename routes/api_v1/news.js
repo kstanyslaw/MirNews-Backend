@@ -32,10 +32,9 @@ router.get('/:id', function(req, res, next) {
 // Save one news
 router.post('/', function(req, res, next) {
   const news = new News({
-    title: req.body.title,
     author: req.body.author,
     date: req.body.date,
-    article: req.body.article,
+    body: req.body.body,
     categories: req.body.categories,
   });
 
