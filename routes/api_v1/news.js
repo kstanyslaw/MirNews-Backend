@@ -34,8 +34,11 @@ router.post('/', function(req, res, next) {
   const news = new News({
     author: req.body.author,
     date: req.body.date,
-    body: req.body.body,
-    categories: req.body.categories,
+    title: req.body.titte,
+    article: req.body.article,
+    preview: req.body.preview,
+    category: req.body.category,
+    img: req.body.img
   });
 
   news.save(function(err, result) {
