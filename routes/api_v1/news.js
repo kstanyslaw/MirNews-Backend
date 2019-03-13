@@ -46,6 +46,16 @@ router.post('/', function(req, res, next) {
   })
 })
 
+// Delete One News
+router.delete('/:id', function(req,res, next) {
+  News.deleteOne({_id: req.params.id}, function(err, result){
+    if(err) {
+      return error(500, "An error occured. Can't delete news by id in DataBase:(", err, res);
+    }
+    res.status(201).json(result)
+  })
+})
+
 function error(status, message, err, res) {
   console.error('\x1b[31m', message, '\n', '\x1b[0m', err);
   return res.status(status).json({
