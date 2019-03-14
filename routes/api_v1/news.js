@@ -6,6 +6,8 @@ const News = require('../../models/news');
 // Get All News
 router.get('/', function(req, res, next) {
   News.find()
+    .select({_id: 1, author: 1, date: 1, title: 1, preview: 1, category: 1})
+    .limit(20)
     .exec(function(err, news) {
       if(err) {
         return error(500, "An error occured. Can't get any news from DataBase:(", err, res);
