@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var mongooseUniqueValidator = require('mongoose-unique-validator');
+var mongoosePaginate = require('mongoose-paginate');
 var Schema = mongoose.Schema;
 
 // Child Schemas
@@ -29,5 +30,6 @@ var schema = new Schema({
 })
 
 schema.plugin(mongooseUniqueValidator);
+schema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('News', schema);

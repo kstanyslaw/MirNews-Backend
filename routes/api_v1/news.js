@@ -5,10 +5,12 @@ const News = require('../../models/news');
 
 // Get All News
 router.get('/', function(req, res, next) {
-  News.find()
-    .select({_id: 1, author: 1, date: 1, title: 1, preview: 1, category: 1})
-    .limit(20)
-    .exec(function(err, news) {
+  News.paginate({}, {
+        select: '_id author date title preview category',
+        sort: { date: -1 },
+        page: req.query.page,
+        limit: 20
+      }, function(err, news) {
       if(err) {
         return error(500, "An error occured. Can't get any news from DataBase:(", err, res);
       }
@@ -20,6 +22,7 @@ router.get('/', function(req, res, next) {
 // Get one news by id
 router.get('/:id', function(req, res, next) {
   News.findById(req.params.id)
+    .select({ author: 1, date: 1, title: 1, article: 1, category: 1 })
     .exec(function(err, news) {
       if(err) {
         return error(500, 'An error occured while getting news by id:(', err, res);
