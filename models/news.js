@@ -2,19 +2,30 @@ var mongoose = require('mongoose');
 var mongooseUniqueValidator = require('mongoose-unique-validator');
 var Schema = mongoose.Schema;
 
-// Child schema for single language article body
-var bodySchema = new Schema({
-    language: {type: String, required: true},
-    title: {type: String, required: true},
-    article: {type: String, required: true},
+// Child Schemas
+var articleSchema = new Schema({
+    en: {type: String, required: true},
+    ru: {type: String, required: true},
 }, {_id: false});
 
-// Parent schema for news with array of news in 
+var titleSchema = new Schema({
+    en: {type: String, required: true},
+    ru: {type: String, required: true},
+}, {_id: false});
+
+var previewSchema = new Schema({
+    en: {type: String, required: true},
+    ru: {type: String, required: true},
+}, {_id: false});
+
 var schema = new Schema({
     author: {type: String, required: true},
     date: {type: Date, required: true},
-    body: [bodySchema],
-    categories: [{ type: String }],
+    title: titleSchema,
+    article: articleSchema,
+    preview: previewSchema,
+    category: [{type: String}],
+    img: [{type: String}],
 })
 
 schema.plugin(mongooseUniqueValidator);
