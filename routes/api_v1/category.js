@@ -10,11 +10,11 @@ router.get('/', function(req, res, next) {
     if(req.query.component) {
         if(req.query.component === 'navbar') {
             select = { en: 1, ru: 1, navColor: 1 };
-            find = { navbar: true };
-            sort = { _id: 1 };
+            find = { navbar: { $gt: 0 } };
+            sort = { navbar: 1 };
         }
     }
-    Category.find()
+    Category.find(find)
         .select(select)
         .sort(sort)
         .exec(function(err, category) {
