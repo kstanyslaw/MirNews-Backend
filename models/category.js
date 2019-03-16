@@ -6,7 +6,8 @@ var schema = new Schema({
     en: {type: String, required: true},
     ru: {type: String, required: true},
     navColor: {type: String, required: true},
-    pageColor: {type: String, },
+    navbar: {type: Number, required: true},
+    pageColor: {type: String, required: true},
 })
 
 schema.plugin(mongooseUniqueValidator);

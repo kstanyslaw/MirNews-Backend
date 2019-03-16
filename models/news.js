@@ -3,7 +3,7 @@ var mongooseUniqueValidator = require('mongoose-unique-validator');
 var mongoosePaginate = require('mongoose-paginate');
 var Schema = mongoose.Schema;
 
-// Child Schemas
+// Children Schemas
 var articleSchema = new Schema({
     en: {type: String, required: true},
     ru: {type: String, required: true},
@@ -19,13 +19,22 @@ var previewSchema = new Schema({
     ru: {type: String, required: true},
 }, {_id: false});
 
+var categorySchema = new Schema({
+    en: {type: String, required: true},
+    ru: {type: String, required: true},
+    navColor: {type: String, required: true},
+    navbar: {type: Number, required: true},
+    pageColor: {type: String, required: true},
+})
+
+// Parent Schema
 var schema = new Schema({
     author: {type: String, required: true},
     date: {type: Date, required: true},
     title: titleSchema,
     article: articleSchema,
     preview: previewSchema,
-    category: [{type: String}],
+    category: [categorySchema],
     img: [{type: String}],
 })
 
