@@ -5,7 +5,8 @@ const News = require('../../models/news');
 
 // Get All News
 router.get('/', function(req, res, next) {
-    News.paginate({}, {
+    const today = new Date();
+    News.paginate({date: {$lte: today}}, {
         select: '_id author date title preview category',
         sort: { date: -1 },
         page: req.query.page,

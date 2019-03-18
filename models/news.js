@@ -22,11 +22,9 @@ var previewSchema = new Schema({
 }, { _id: false });
 //      Category Schema
 var categorySchema = new Schema({
-    en: { type: String, required: true },
-    ru: { type: String, required: true },
-    navColor: { type: String, required: true },
-    navbar: { type: Number, required: true },
-    pageColor: { type: String, required: true },
+    en: {type: String, required: true},
+    ru: {type: String, required: true},
+    pageColor: {type: String, required: true},
 })
 
 // Parent Schema
