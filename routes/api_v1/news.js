@@ -5,8 +5,18 @@ const News = require('../../models/news');
 
 // Get All News
 router.get('/', function(req, res, next) {
-    const today = new Date();
-    News.paginate({date: {$lte: today}}, {
+    var query = { date: {$lte: new Date}};
+    if(req.query.category) {
+        query['category.en'] = req.query.category;
+    }
+    if(req.query.archives) {
+        var date = new Date(req.query.archives);
+        query['date'] = {
+            $lte: date,
+            $gt: new Date(date.getTime() - 24 * 3600 * 1000)
+        }
+    }
+    News.paginate(query, {
         select: '_id author date title preview category',
         sort: { date: -1 },
         page: req.query.page,
