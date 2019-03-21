@@ -5,6 +5,8 @@ const News = require('../../models/news');
 
 // Get All News
 router.get('/', function(req, res, next) {
+    var limit = req.query.limit ? +req.query.limit : 20;
+    var page = req.query.page ? +req.query.page : 1;
     var query = { date: {$lte: new Date}};
     if(req.query.category) {
         query['category.en'] = req.query.category;
@@ -19,8 +21,8 @@ router.get('/', function(req, res, next) {
     News.paginate(query, {
         select: '_id author date title preview category',
         sort: { date: -1 },
-        page: req.query.page,
-        limit: 20
+        page: page,
+        limit: limit
     }, function(err, news) {
         if (err) {
             return error(500, "An error occured. Can't get any news from DataBase:(", err, res);
