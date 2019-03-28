@@ -7,7 +7,7 @@ const News = require('../../models/news');
 router.get('/', function(req, res, next) {
     var limit = req.query.limit ? +req.query.limit : 20;
     var page = req.query.page ? +req.query.page : 1;
-    var query = { date: {$lte: new Date}};
+    var query = req.query.component === 'dashboard' ? {} : { date: {$lte: new Date}};
     if(req.query.category) {
         query['category.en'] = req.query.category;
     }
@@ -41,7 +41,7 @@ router.get('/:id', function(req, res, next) {
                 return error(500, 'An error occured while getting news by id:(', err, res);
             }
             if (!news) {
-                return error(500, 'No news found with such id:(', ('id: ' + req.params.id), res);
+                return error(404, 'No news found with such id:(', ('id: ' + req.params.id), res);
             }
             return res.status(200).json(news);
         })
